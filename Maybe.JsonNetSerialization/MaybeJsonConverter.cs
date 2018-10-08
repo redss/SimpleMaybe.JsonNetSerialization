@@ -6,9 +6,19 @@ namespace Maybe.JsonNetSerialization
 {
     public class MaybeJsonConverter : JsonConverter
     {
+        // todo: test
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            var valueType = value.GetType().GetGenericArguments()[0];
+
+            if (MaybeNonGenericFactory.TryGetValue(value, valueType, out var innerValue))
+            {
+                serializer.Serialize(writer, innerValue);
+            }
+            else
+            {
+                serializer.Serialize(writer, null);
+            }
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

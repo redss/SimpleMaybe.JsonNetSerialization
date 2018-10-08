@@ -1,25 +1,47 @@
 using System;
 
+// ReSharper disable PossibleNullReferenceException
+
 namespace Maybe.JsonNetSerialization
 {
     internal static class MaybeNonGenericFactory
     {
         public static object None(Type type)
         {
-            var noneMethod = typeof(SimpleMaybe.Maybe).GetMethod(nameof(SimpleMaybe.Maybe.None));
+            return typeof(SimpleMaybe.Maybe)
+                .GetMethod(nameof(SimpleMaybe.Maybe.None))
+                .MakeGenericMethod(type)
+                .Invoke(null, new object[0]);
+        }
 
-            var genericNoneMethod = noneMethod.MakeGenericMethod(type);
+        public static bool TryGetValue(object maybe, Type type, out object value)
+        {
+            var hasValue = (bool) typeof(SimpleMaybe.Maybe<>)
+                .MakeGenericType(type)
+                .GetProperty(nameof(SimpleMaybe.Maybe<object>.HasValue))
+                .GetValue(maybe);
 
-            return genericNoneMethod.Invoke(null, new object[0]);
+            if (hasValue)
+            {
+                value = typeof(SimpleMaybe.Maybe<>)
+                    .MakeGenericType(type)
+                    .GetMethod(nameof(SimpleMaybe.Maybe<object>.ValueOrFail))
+                    .Invoke(maybe, new object[0]);
+
+                return true;
+            }
+
+            value = null;
+
+            return false;
         }
 
         public static object Some(Type type, object value)
         {
-            var noneMethod = typeof(SimpleMaybe.Maybe).GetMethod(nameof(SimpleMaybe.Maybe.Some));
-
-            var genericNoneMethod = noneMethod.MakeGenericMethod(type);
-
-            return genericNoneMethod.Invoke(null, new[] { value });
+            return typeof(SimpleMaybe.Maybe)
+                .GetMethod(nameof(SimpleMaybe.Maybe.Some))
+                .MakeGenericMethod(type)
+                .Invoke(null, new[] { value });
         }
     }
 }

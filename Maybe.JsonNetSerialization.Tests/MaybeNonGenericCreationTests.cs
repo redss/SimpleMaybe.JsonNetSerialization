@@ -20,5 +20,16 @@ namespace Maybe.JsonNetSerialization.Tests
 
             some.Should().Be(SimpleMaybe.Maybe.Some(10));
         }
+
+        [Test]
+        public void can_extract_some_out_of_maybe()
+        {
+            var some = SimpleMaybe.Maybe.Some(10);
+
+            var hasValue = MaybeNonGenericFactory.TryGetValue(some, typeof(int), out var value);
+
+            hasValue.Should().Be(true);
+            value.Should().Be(10);
+        }
     }
 }
