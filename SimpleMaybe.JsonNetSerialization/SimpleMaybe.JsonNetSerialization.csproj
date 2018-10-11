@@ -6,6 +6,7 @@
     <FileVersion>0.0.1.0</FileVersion>
     <Version>0.0.1</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>Serialization of SimpleMaybe's Maybe type for JSON.NET.</Description>
   </PropertyGroup>
 
   <ItemGroup>
