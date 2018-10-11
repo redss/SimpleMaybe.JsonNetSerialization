@@ -10,7 +10,7 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
         {
             var none = MaybeNonGenericFactory.None(typeof(int));
 
-            none.Should().Be(SimpleMaybe.Maybe.None<int>());
+            none.Should().Be(Maybe.None<int>());
         }
 
         [Test]
@@ -18,13 +18,13 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
         {
             var some = MaybeNonGenericFactory.Some(typeof(int), 10);
 
-            some.Should().Be(SimpleMaybe.Maybe.Some(10));
+            some.Should().Be(Maybe.Some(10));
         }
 
         [Test]
         public void can_extract_some_out_of_maybe()
         {
-            var some = SimpleMaybe.Maybe.Some(10);
+            var some = Maybe.Some(10);
 
             var hasValue = MaybeNonGenericFactory.TryGetValue(some, typeof(int), out var value);
 

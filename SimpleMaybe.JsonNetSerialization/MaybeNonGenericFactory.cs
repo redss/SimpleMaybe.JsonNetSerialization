@@ -8,8 +8,8 @@ namespace SimpleMaybe.JsonNetSerialization
     {
         public static object None(Type type)
         {
-            return typeof(SimpleMaybe.Maybe)
-                .GetMethod(nameof(SimpleMaybe.Maybe.None))
+            return typeof(Maybe)
+                .GetMethod(nameof(Maybe.None))
                 .MakeGenericMethod(type)
                 .Invoke(null, new object[0]);
         }
@@ -17,16 +17,16 @@ namespace SimpleMaybe.JsonNetSerialization
         // todo: just return object or null?
         public static bool TryGetValue(object maybe, Type type, out object value)
         {
-            var hasValue = (bool) typeof(SimpleMaybe.Maybe<>)
+            var hasValue = (bool) typeof(Maybe<>)
                 .MakeGenericType(type)
-                .GetProperty(nameof(SimpleMaybe.Maybe<object>.HasValue))
+                .GetProperty(nameof(Maybe<object>.HasValue))
                 .GetValue(maybe);
 
             if (hasValue)
             {
-                value = typeof(SimpleMaybe.Maybe<>)
+                value = typeof(Maybe<>)
                     .MakeGenericType(type)
-                    .GetMethod(nameof(SimpleMaybe.Maybe<object>.ValueOrFail))
+                    .GetMethod(nameof(Maybe<object>.ValueOrFail))
                     .Invoke(maybe, new object[0]);
 
                 return true;
@@ -39,8 +39,8 @@ namespace SimpleMaybe.JsonNetSerialization
 
         public static object Some(Type type, object value)
         {
-            return typeof(SimpleMaybe.Maybe)
-                .GetMethod(nameof(SimpleMaybe.Maybe.Some))
+            return typeof(Maybe)
+                .GetMethod(nameof(Maybe.Some))
                 .MakeGenericMethod(type)
                 .Invoke(null, new[] { value });
         }

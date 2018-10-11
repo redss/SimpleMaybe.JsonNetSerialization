@@ -14,7 +14,7 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
         {
             var someContract = Deserialize<SomeContract>(@"{ ""MaybeInt"": null }");
 
-            someContract.MaybeInt.Should().Be(SimpleMaybe.Maybe.None<int>());
+            someContract.MaybeInt.Should().Be(Maybe.None<int>());
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
         {
             var someContract = Deserialize<SomeContract>(@"{ }");
 
-            someContract.MaybeInt.Should().Be(SimpleMaybe.Maybe.None<int>());
+            someContract.MaybeInt.Should().Be(Maybe.None<int>());
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
         {
             var someContract = Deserialize<SomeContract>(@"{ ""MaybeInt"": 10 }");
 
-            someContract.MaybeInt.Should().Be(SimpleMaybe.Maybe.Some(10));
+            someContract.MaybeInt.Should().Be(Maybe.Some(10));
         }
 
         [Test]
