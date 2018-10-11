@@ -14,6 +14,7 @@ namespace SimpleMaybe.JsonNetSerialization
                 .Invoke(null, new object[0]);
         }
 
+        // todo: just return object or null?
         public static bool TryGetValue(object maybe, Type type, out object value)
         {
             var hasValue = (bool) typeof(SimpleMaybe.Maybe<>)

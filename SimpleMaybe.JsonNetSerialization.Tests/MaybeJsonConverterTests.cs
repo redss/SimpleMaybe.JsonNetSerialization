@@ -1,17 +1,31 @@
 ﻿using FluentAssertions;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+
+// ReSharper disable ClassNeverInstantiated.Local
 
 namespace SimpleMaybe.JsonNetSerialization.Tests
 {
     public class MaybeJsonConverterTests
     {
         [Test]
-        public void can_deserialize_null()
+        public void can_deserialize_none()
         {
             var someContract = Deserialize<SomeContract>(@"{ ""MaybeInt"": null }");
 
             someContract.MaybeInt.Should().Be(SimpleMaybe.Maybe.None<int>());
+        }
+
+        [Test]
+        public void can_serialize_none()
+        {
+            var json = Serialize(new SomeContract
+            {
+                MaybeInt = Maybe.None<int>()
+            });
+
+            JsonsShouldBeEqual(json, @"{ ""MaybeInt"": null }");
         }
 
         [Test]
@@ -31,6 +45,17 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
         }
 
         [Test]
+        public void can_serialize_some_value()
+        {
+            var json = Serialize(new SomeContract
+            {
+                MaybeInt = Maybe.Some(10)
+            });
+
+            JsonsShouldBeEqual(json, @"{ ""MaybeInt"": 10 }");
+        }
+
+        [Test]
         public void can_deserialize_complex_objects()
         {
             var someContract = Deserialize<SomeComplexContract>(@"{ ""MaybeAddress"": { ""IsNorthPole"": true, ""Country"": ""Sealand"" } }");
@@ -42,9 +67,34 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
             });
         }
 
+        [Test]
+        public void can_serialize_complex_objects()
+        {
+            var json = Serialize(new SomeComplexContract
+            {
+                MaybeAddress = Maybe.Some(new SomeComplexContract.Address
+                {
+                    IsNorthPole = true,
+                    Country = "Sealand"
+                })
+            });
+
+            JsonsShouldBeEqual(json, @"{ ""MaybeAddress"": { ""IsNorthPole"": true, ""Country"": ""Sealand"" } }");
+        }
+
         private static T Deserialize<T>(string json)
         {
             return JsonConvert.DeserializeObject<T>(json, new MaybeJsonConverter());
+        }
+
+        private static string Serialize(object value)
+        {
+            return JsonConvert.SerializeObject(value, new MaybeJsonConverter());
+        }
+
+        private static void JsonsShouldBeEqual(string actualJson, string expectedJson)
+        {
+            JToken.Parse(actualJson).ToString().Should().Be(JToken.Parse(expectedJson).ToString());
         }
 
         class SomeContract
