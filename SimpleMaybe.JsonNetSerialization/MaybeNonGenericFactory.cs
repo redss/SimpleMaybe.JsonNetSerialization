@@ -2,7 +2,7 @@ using System;
 
 // ReSharper disable PossibleNullReferenceException
 
-namespace Maybe.JsonNetSerialization
+namespace SimpleMaybe.JsonNetSerialization
 {
     internal static class MaybeNonGenericFactory
     {

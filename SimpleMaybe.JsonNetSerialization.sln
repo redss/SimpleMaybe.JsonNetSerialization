@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maybe.JsonNetSerialization", "Maybe.JsonNetSerialization\Maybe.JsonNetSerialization.csproj", "{83D63AB6-613B-477B-96C9-F1712CC800E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMaybe.JsonNetSerialization", "SimpleMaybe.JsonNetSerialization\SimpleMaybe.JsonNetSerialization.csproj", "{83D63AB6-613B-477B-96C9-F1712CC800E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maybe.JsonNetSerialization.Tests", "Maybe.JsonNetSerialization.Tests\Maybe.JsonNetSerialization.Tests.csproj", "{E8B556B1-A4EA-4389-B169-DCE549CE62AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMaybe.JsonNetSerialization.Tests", "SimpleMaybe.JsonNetSerialization.Tests\SimpleMaybe.JsonNetSerialization.Tests.csproj", "{E8B556B1-A4EA-4389-B169-DCE549CE62AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
 using Newtonsoft.Json;
 using NUnit.Framework;
-using SimpleMaybe;
 
-namespace Maybe.JsonNetSerialization.Tests
+namespace SimpleMaybe.JsonNetSerialization.Tests
 {
     public class MaybeJsonConverterTests
     {

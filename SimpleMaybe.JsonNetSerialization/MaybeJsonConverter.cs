@@ -1,8 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
-using SimpleMaybe;
 
-namespace Maybe.JsonNetSerialization
+namespace SimpleMaybe.JsonNetSerialization
 {
     public class MaybeJsonConverter : JsonConverter
     {

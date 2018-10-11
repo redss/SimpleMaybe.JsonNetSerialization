@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 
-namespace Maybe.JsonNetSerialization.Tests
+namespace SimpleMaybe.JsonNetSerialization.Tests
 {
     public class MaybeNonGenericCreationTests
     {
