@@ -22,14 +22,29 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
         }
 
         [Test]
-        public void can_extract_some_out_of_maybe()
+        public void can_extract_value_out_of_some()
         {
-            var some = Maybe.Some(10);
+            MaybeNonGenericFactory.TryGetValue(Maybe.Some(10), typeof(int))
+                .Should().Be(10);
 
-            var hasValue = MaybeNonGenericFactory.TryGetValue(some, typeof(int), out var value);
+            MaybeNonGenericFactory.TryGetValue(Maybe.Some<int?>(10), typeof(int?))
+                .Should().Be(10);
 
-            hasValue.Should().Be(true);
-            value.Should().Be(10);
+            MaybeNonGenericFactory.TryGetValue(Maybe.Some("aaa"), typeof(string))
+                .Should().Be("aaa");
+        }
+
+        [Test]
+        public void can_extract_null_out_of_none()
+        {
+            MaybeNonGenericFactory.TryGetValue(Maybe.None<int>(), typeof(int))
+                .Should().BeNull();
+
+            MaybeNonGenericFactory.TryGetValue(Maybe.None<int?>(), typeof(int?))
+                .Should().BeNull();
+
+            MaybeNonGenericFactory.TryGetValue(Maybe.None<string>(), typeof(string))
+                .Should().BeNull();
         }
     }
 }

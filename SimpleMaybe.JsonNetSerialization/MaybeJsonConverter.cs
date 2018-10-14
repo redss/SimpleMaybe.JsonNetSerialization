@@ -5,13 +5,11 @@ namespace SimpleMaybe.JsonNetSerialization
 {
     public class MaybeJsonConverter : JsonConverter
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object maybe, JsonSerializer serializer)
         {
-            var valueType = value.GetType().GetGenericArguments()[0];
+            var valueType = maybe.GetType().GetGenericArguments()[0];
 
-            var valueOrNull = MaybeNonGenericFactory.TryGetValue(value, valueType, out var innerValue)
-                ? innerValue
-                : null;
+            var valueOrNull = MaybeNonGenericFactory.TryGetValue(maybe, valueType);
 
             serializer.Serialize(writer, valueOrNull);
         }

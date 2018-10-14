@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 // ReSharper disable PossibleNullReferenceException
 
@@ -6,43 +7,46 @@ namespace SimpleMaybe.JsonNetSerialization
 {
     internal static class MaybeNonGenericFactory
     {
-        public static object None(Type type)
+        public static object None(Type valueType)
         {
-            return typeof(Maybe)
-                .GetMethod(nameof(Maybe.None))
-                .MakeGenericMethod(type)
+            return typeof(MaybeNonGenericFactory)
+                .GetMethod(nameof(MaybeNone), BindingFlags.Static | BindingFlags.NonPublic)
+                .MakeGenericMethod(valueType)
                 .Invoke(null, new object[0]);
         }
 
-        // todo: just return object or null?
-        public static bool TryGetValue(object maybe, Type type, out object value)
+        private static Maybe<TValue> MaybeNone<TValue>()
         {
-            var hasValue = (bool) typeof(Maybe<>)
-                .MakeGenericType(type)
-                .GetProperty(nameof(Maybe<object>.HasValue))
-                .GetValue(maybe);
-
-            if (hasValue)
-            {
-                value = typeof(Maybe<>)
-                    .MakeGenericType(type)
-                    .GetMethod(nameof(Maybe<object>.ValueOrFail))
-                    .Invoke(maybe, new object[0]);
-
-                return true;
-            }
-
-            value = null;
-
-            return false;
+            return Maybe.None<TValue>();
         }
 
-        public static object Some(Type type, object value)
+        public static object TryGetValue(object maybe, Type valueType)
         {
-            return typeof(Maybe)
-                .GetMethod(nameof(Maybe.Some))
-                .MakeGenericMethod(type)
+            return typeof(MaybeNonGenericFactory)
+                .GetMethod(nameof(MaybeTryGetValue), BindingFlags.Static | BindingFlags.NonPublic)
+                .MakeGenericMethod(valueType)
+                .Invoke(null, new[] { maybe });
+        }
+
+        private static object MaybeTryGetValue<TValue>(Maybe<TValue> maybe)
+        {
+            return maybe.Match<object>(
+                some: value => value,
+                none: () => null
+            );
+        }
+
+        public static object Some(Type valueType, object value)
+        {
+            return typeof(MaybeNonGenericFactory)
+                .GetMethod(nameof(MaybeSome), BindingFlags.Static | BindingFlags.NonPublic)
+                .MakeGenericMethod(valueType)
                 .Invoke(null, new[] { value });
+        }
+
+        private static Maybe<TValue> MaybeSome<TValue>(TValue value)
+        {
+            return Maybe.Some(value);
         }
     }
 }
