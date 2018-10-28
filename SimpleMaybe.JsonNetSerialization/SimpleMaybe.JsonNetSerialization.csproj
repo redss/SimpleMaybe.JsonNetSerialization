@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyVersion>0.0.1.0</AssemblyVersion>
     <FileVersion>0.0.1.0</FileVersion>
-    <Version>0.0.1-alpha-1</Version>
+    <Version>0.0.1-alpha-2</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Description>Serialization of SimpleMaybe's Maybe type for JSON.NET.</Description>
+    <Description>Serialization of SimpleMaybe's Maybe type for Json.NET.</Description>
   </PropertyGroup>
 
   <ItemGroup>
