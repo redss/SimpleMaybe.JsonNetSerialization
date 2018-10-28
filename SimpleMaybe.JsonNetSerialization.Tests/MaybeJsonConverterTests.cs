@@ -3,7 +3,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-// ReSharper disable ClassNeverInstantiated.Local
+// ReSharper disable UnusedAutoPropertyAccessor.Local - they are by reflection
+// ReSharper disable ClassNeverInstantiated.Local - they are by reflection
 
 namespace SimpleMaybe.JsonNetSerialization.Tests
 {
@@ -58,12 +59,12 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
         [Test]
         public void can_deserialize_complex_objects()
         {
-            var someContract = Deserialize<SomeComplexContract>(@"{ ""MaybeAddress"": { ""IsNorthPole"": true, ""Country"": ""Sealand"" } }");
+            var someContract = Deserialize<SomeComplexContract>(@"{ ""MaybeAddress"": { ""IsAntarctica"": true, ""City"": ""McMurdo"" } }");
 
             someContract.MaybeAddress.ValueOrDefault().Should().BeEquivalentTo(new SomeComplexContract.Address
             {
-                IsNorthPole = true,
-                Country = "Sealand"
+                IsAntarctica = true,
+                City = "McMurdo"
             });
         }
 
@@ -74,12 +75,12 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
             {
                 MaybeAddress = Maybe.Some(new SomeComplexContract.Address
                 {
-                    IsNorthPole = true,
-                    Country = "Sealand"
+                    IsAntarctica = true,
+                    City = "McMurdo"
                 })
             });
 
-            JsonsShouldBeEqual(json, @"{ ""MaybeAddress"": { ""IsNorthPole"": true, ""Country"": ""Sealand"" } }");
+            JsonsShouldBeEqual(json, @"{ ""MaybeAddress"": { ""IsAntarctica"": true, ""City"": ""McMurdo"" } }");
         }
 
         private static T Deserialize<T>(string json)
@@ -108,8 +109,8 @@ namespace SimpleMaybe.JsonNetSerialization.Tests
 
             public class Address
             {
-                public bool IsNorthPole { get; set; }
-                public string Country { get; set; }
+                public bool IsAntarctica { get; set; }
+                public string City { get; set; }
             }
         }
     }
